@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="scan">Scan QR-code</string>
+    <string name="showVideo">Watch video</string>
+    <string name="todo">TODO</string>
+</resources>

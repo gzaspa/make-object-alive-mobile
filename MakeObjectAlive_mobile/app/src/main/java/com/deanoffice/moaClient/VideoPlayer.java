@@ -59,15 +59,13 @@ public class VideoPlayer {
         });
     }
 
-    public void showVideoFromM3u8URL(String m3u8URL, Activity activity, PlayerView playerView, MediaSourceEventListener eventListener_) {
+    public void showVideoFromM3u8URL(String m3u8URL, Activity activity, PlayerView playerView, MediaSourceEventListener eventListener) {
         Handler mainHandler = new Handler();
         DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
         TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
         TrackSelector trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
         LoadControl loadControl = new DefaultLoadControl();
         SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(activity, trackSelector, loadControl);
-
-        MediaSourceEventListener eventListener = eventListener_;
 
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(activity, Util.getUserAgent(activity, "example-hls-app"), bandwidthMeter);
         HlsMediaSource videoSource = new HlsMediaSource(Uri.parse(m3u8URL), dataSourceFactory, 5, mainHandler, eventListener);

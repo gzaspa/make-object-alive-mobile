@@ -13,11 +13,9 @@ import android.widget.VideoView;
 import com.deanoffice.moaClient.client.Client;
 import com.deanoffice.moaClient.fileOperaion.FileOperator;
 import com.deanoffice.moaClient.fileOperaion.MessageUtils;
-import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.MediaSourceEventListener;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -26,17 +24,17 @@ import java.io.IOException;
 import okhttp3.OkHttpClient;
 
 
-public class MainActivity extends AppCompatActivity implements MediaSourceEventListener{
-    Button btnView, btnScan;
+public class MainActivity extends AppCompatActivity{
 
     String url = "http://192.168.212.57:8080/webDevelop_war_exploded/Send";
     String videoURL = "http://deddj9om7jjsg.cloudfront.net/c29153a9-1044-4952-96f6-22131d44e843/hls/VID_20200123_145724.m3u8";
 
     PlayerView playerView;
+    VideoView videoView;
     QRScan qrScan;
     FileOperator fileOperator;
     Client client;
-    VideoPlayer videoPlayer;
+    VideoPlayerController videoPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +50,11 @@ public class MainActivity extends AppCompatActivity implements MediaSourceEventL
             }, 2);
         }
 
-        btnView = findViewById(R.id.btnGenerate);
-        btnScan = findViewById(R.id.btnScan);
         playerView = findViewById(R.id.exoplayer);
         client = new Client(new OkHttpClient(), url, MainActivity.this);
-        videoPlayer = new VideoPlayer();
+        videoView = findViewById(R.id.videoView);
+
+        videoPlayer = new VideoPlayerController(videoView, playerView);
 
         fileOperator = new FileOperator();
         qrScan = new QRScan();
@@ -78,56 +76,20 @@ public class MainActivity extends AppCompatActivity implements MediaSourceEventL
         qrScan.scanProcess(MainActivity.this);
     }
 
-    public void buttonView(View view){
+    public void buttonStream(View view){
         try{
-            videoPlayer.showVideoFromM3u8URL(videoURL, this, playerView, this);
+            videoPlayer.showVideoFromM3u8URL(videoURL, this);
         }catch (Exception e){
             System.out.println(e.toString());
         }
     }
 
-    @Override
-    public void onMediaPeriodCreated(int windowIndex, MediaSource.MediaPeriodId mediaPeriodId) {
-        ///
+    public void buttonView(View view){
+        try{
+            videoPlayer.showVideo(this);
+        }catch (Exception e){
+            System.out.println(e.toString());
+        }
     }
 
-    @Override
-    public void onMediaPeriodReleased(int windowIndex, MediaSource.MediaPeriodId mediaPeriodId) {
-        ///
-    }
-
-    @Override
-    public void onLoadStarted(int windowIndex, @Nullable MediaSource.MediaPeriodId mediaPeriodId, LoadEventInfo loadEventInfo, MediaLoadData mediaLoadData) {
-        ///
-    }
-
-    @Override
-    public void onLoadCompleted(int windowIndex, @Nullable MediaSource.MediaPeriodId mediaPeriodId, LoadEventInfo loadEventInfo, MediaLoadData mediaLoadData) {
-        ///
-    }
-
-    @Override
-    public void onLoadCanceled(int windowIndex, @Nullable MediaSource.MediaPeriodId mediaPeriodId, LoadEventInfo loadEventInfo, MediaLoadData mediaLoadData) {
-        ///
-    }
-
-    @Override
-    public void onLoadError(int windowIndex, @Nullable MediaSource.MediaPeriodId mediaPeriodId, LoadEventInfo loadEventInfo, MediaLoadData mediaLoadData, IOException error, boolean wasCanceled) {
-        ///
-    }
-
-    @Override
-    public void onReadingStarted(int windowIndex, MediaSource.MediaPeriodId mediaPeriodId) {
-        ///
-    }
-
-    @Override
-    public void onUpstreamDiscarded(int windowIndex, MediaSource.MediaPeriodId mediaPeriodId, MediaLoadData mediaLoadData) {
-        ///
-    }
-
-    @Override
-    public void onDownstreamFormatChanged(int windowIndex, @Nullable MediaSource.MediaPeriodId mediaPeriodId, MediaLoadData mediaLoadData) {
-        ///
-    }
 }

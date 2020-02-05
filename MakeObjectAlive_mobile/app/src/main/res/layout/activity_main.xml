@@ -21,6 +21,7 @@
 
     <Button
         android:id="@+id/btnGenerate"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="buttonView"
@@ -36,6 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="buttonStream"
+        android:visibility="invisible"
         android:text="@string/showStream"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,17 +47,16 @@
 
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/exoplayer"
-        android:visibility="invisible"
-        android:layout_width="400dp"
-        android:layout_height="450dp"
+        android:layout_width="398dp"
+        android:layout_height="642dp"
         android:contentDescription="@string/todo"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@android:color/holo_blue_light"
-        />
+        app:srcCompat="@android:color/holo_blue_light" />
     <VideoView
         android:id="@+id/videoView"
         android:visibility="invisible"

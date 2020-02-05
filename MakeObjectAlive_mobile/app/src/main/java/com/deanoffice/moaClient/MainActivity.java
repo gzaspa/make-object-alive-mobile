@@ -27,7 +27,6 @@ import okhttp3.OkHttpClient;
 public class MainActivity extends AppCompatActivity{
 
     String url = "http://192.168.212.57:8080/webDevelop_war_exploded/Send";
-    String videoURL = "http://deddj9om7jjsg.cloudfront.net/c29153a9-1044-4952-96f6-22131d44e843/hls/VID_20200123_145724.m3u8";
 
     PlayerView playerView;
     VideoView videoView;
@@ -65,8 +64,9 @@ public class MainActivity extends AppCompatActivity{
         final IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
         if(result != null && result.getContents() != null){
-            client.connect(result.getContents(), fileOperator);
-            MessageUtils.showMessage("Finally", "Video downloaded", this);
+            videoPlayer.showVideoFromM3u8URL(result.getContents(), this);
+            //client.connect(result.getContents(), fileOperator);
+            //MessageUtils.showMessage("Finally", "Video downloaded", this);
         }
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity{
 
     public void buttonStream(View view){
         try{
-            videoPlayer.showVideoFromM3u8URL(videoURL, this);
+            //videoPlayer.showVideoFromM3u8URL(videoURL, this);
         }catch (Exception e){
             System.out.println(e.toString());
         }

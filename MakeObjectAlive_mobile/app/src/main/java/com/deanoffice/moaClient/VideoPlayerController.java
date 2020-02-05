@@ -59,6 +59,11 @@ public class VideoPlayerController  implements MediaSourceEventListener{
     }
 
     public void showVideoFromM3u8URL(String m3u8URL, Activity activity) {
+        int a = 0;
+        a = m3u8URL.indexOf(".m3u8");
+        if(a==0){
+            return;
+        }
         if(videoView.isPlaying()){
             videoView.stopPlayback();
             videoView.setVisibility(View.INVISIBLE);

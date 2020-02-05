@@ -51,26 +51,30 @@ public class Client {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                fileOperator.createFile();
-                if(response.body().byteStream() != null){
-                    InputStream os = response.body().byteStream();
-                    FileOutputStream fos = new FileOutputStream(fileOperator.fileData.getFile());
-                    BufferedInputStream bin = new BufferedInputStream(os);
-                    BufferedOutputStream bout = new BufferedOutputStream(fos);
-
-                    int ch = 0;
-                    while((ch=bin.read())!=-1){
-                        bout.write(ch);
-                    }
-
-                    bin.close();
-                    os.close();
-                    bout.close();
-                    fos.close();
-                }
+                downloadVideo(response, fileOperator);
             }
-
         });
         return true;
     }
+
+    public void downloadVideo(Response response, FileOperator fileOperator) throws  IOException{
+        fileOperator.createFile();
+        if(response.body().byteStream() != null){
+            InputStream os = response.body().byteStream();
+            FileOutputStream fos = new FileOutputStream(fileOperator.fileData.getFile());
+            BufferedInputStream bin = new BufferedInputStream(os);
+            BufferedOutputStream bout = new BufferedOutputStream(fos);
+
+            int ch = 0;
+            while((ch=bin.read())!=-1){
+                bout.write(ch);
+            }
+
+            bin.close();
+            os.close();
+            bout.close();
+            fos.close();
+        }
+    }
 }
+
